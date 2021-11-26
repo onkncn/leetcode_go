@@ -20,8 +20,7 @@ func sortColors(nums []int) {
 		}
 	}
 }
+
 func main() {
-	nums := []int{2, 1, 0}
-	sortColors(nums)
-	fmt.Println(nums)
+	fmt.Println()
 }
