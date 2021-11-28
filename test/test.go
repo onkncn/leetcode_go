@@ -4,10 +4,20 @@ import (
 	"fmt"
 )
 
+func addflag(flag_all, c int) int {
+	if (flag_all>>c)%2 == 0 {
+		flag_all += 1 << c
+	}
+	return flag_all
+}
+func exflag(flag_all, c int) int {
+	return flag_all - 1<<c
+}
+
 func main() {
-	arr := []int{1, 9, 10, 3, 15, 8, 212}
-	QuickSort(arr)
-	fmt.Println(arr)
+	arr := [3]int{1, 2, 3}
+	arr2 := [3]int{1, 2, 3}
+	fmt.Println(arr == arr2)
 }
 
 func QuickSort(arr []int) {
