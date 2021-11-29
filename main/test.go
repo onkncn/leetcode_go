@@ -18,6 +18,7 @@ func main() {
 	arr := [3]int{1, 2, 3}
 	arr2 := [3]int{1, 2, 3}
 	fmt.Println(arr == arr2)
+	fmt.Println(arr[0:1])
 }
 
 func QuickSort(arr []int) {

@@ -1,13 +1,19 @@
 package main
 
+import "fmt"
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
-func add(t, node TreeNode) *TreeNode {
-	p := &node
+/*
+func add(t, node *TreeNode) *TreeNode {
+	if t==nil||t.Val==0{
+		return node
+	}
+	p := node
 	tp := p
 	for p != nil {
 		tp = p
@@ -18,55 +24,54 @@ func add(t, node TreeNode) *TreeNode {
 		}
 	}
 	if tp.Val > t.Val {
-		tp.Left = &t
+		tp.Left = t
 	} else {
-		tp.Right = &t
+		tp.Right = t
 	}
-	return &node
+	return node
 }
 
-func copy(node TreeNode) *TreeNode {
+func copy(node *TreeNode) *TreeNode {
 	t := TreeNode{node.Val, nil, nil}
 	t.Val = node.Val
 	if node.Left != nil {
-		t.Left = copy(*node.Left)
+		t.Left = copy(node.Left)
 
 	}
 	if node.Right != nil {
-		t.Right = copy(*node.Right)
+		t.Right = copy(node.Right)
 	}
 	return &t
 }
+*/
 
-func errogenerateTrees(n int) []*TreeNode {
-	if n == 1 {
-		return []*TreeNode{&TreeNode{1, nil, nil}}
-	}
-	rres := errogenerateTrees(n - 1)
-	res := []*TreeNode{}
-	lr := len(rres)
-	for i := 0; i < lr; i++ {
-		res = append(res, add(*copy(*rres[i]), TreeNode{n, nil, nil}))
-		res = append(res, add(TreeNode{n, nil, nil}, *copy(*rres[i])))
-	}
-	return res
-}
 func generateTrees(n int) []*TreeNode {
-	if n == 1 {
-		return []*TreeNode{&TreeNode{1, nil, nil}}
+	return generate(1, n)
+}
+
+func generate(m, n int) []*TreeNode {
+	if m > n {
+		return []*TreeNode{{}}
 	}
-	rres := generateTrees(n - 1)
+	if n == m {
+		return []*TreeNode{&TreeNode{m, nil, nil}}
+	}
 	res := []*TreeNode{}
-	lr := len(rres)
-	for i := 0; i < lr; i++ {
-		res = append(res, add(*copy(*rres[i]), TreeNode{n, nil, nil}))
-		res = append(res, add(TreeNode{n, nil, nil}, *copy(*rres[i])))
+	for i := m; i <= n; i++ {
+		left := generate(m, i-1)
+		right := generate(i+1, n)
+		for _, l := range left {
+			for _, r := range right {
+				t := &TreeNode{i, l, r}
+				res = append(res, t)
+			}
+		}
 	}
 	return res
 }
 
 func main() {
-
+	fmt.Println(generateTrees(2))
 }
 
 /*
