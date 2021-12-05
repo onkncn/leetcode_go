@@ -2,41 +2,65 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
-func search(nums []int, target int) bool {
-	nlen := len(nums)
-	if nlen < 10 {
-		for i := 0; i < nlen; i++ {
-			if nums[i] == target {
-				return true
-			}
-			return false
+func bSt(nums []int, target int) int {
+	h, t := 0, len(nums)
+	s, e := nums[h], nums[t-1]
+	if s == e {
+		for h < t && nums[t-1] == s && nums[h] == s {
+			h++
+			t--
+			fmt.Println(h, "   ", t)
+		}
+		if h >= t {
+			return 0
+		}
+		if nums[h] < nums[t-1] {
+			return t
+		}
+		s, e = nums[h], nums[t-1]
+	}
+	for h < t {
+		m := (h + t) / 2
+		if m < 1 || nums[m] < nums[m-1] {
+			return m
+		} else if nums[m] <= e {
+			t = m
+		} else {
+			h = m + 1
 		}
 	}
-	if target == nums[0] {
-		return true
-	}
-	index := sort.Search(nlen, func(index int) bool {
-		return nums[index-1] <= nums[index] && nums[index+1] > nums[index]
-	})
-	nums1 := nums[0:index]
-	i := sort.Search(nlen, func(index int) bool {
-		return nums1[index] >= target
-	})
-	if nums1[i] == target {
-		return true
-	}
-	nums2 := nums[index:nlen]
-	i = sort.Search(nlen, func(index int) bool {
-		return nums2[index] >= target
-	})
-	return nums2[i] == target
+	return h
 }
-
+func bS(nums []int, h, t, target int) int {
+	for h < t {
+		m := (h + t) / 2
+		if nums[m] == target {
+			return m
+		} else if nums[m] > target {
+			t = m
+		} else {
+			h = m + 1
+		}
+	}
+	return h
+}
+func search(nums []int, target int) bool {
+	t := bSt(nums, target)
+	l := len(nums)
+	a := bS(nums, 0, t, target)
+	if a < l && nums[a] == target {
+		return true
+	}
+	a = bS(nums, t, len(nums), target)
+	if a < l && nums[a] == target {
+		return true
+	}
+	return false
+}
 func main() {
-	nums := []int{2, 5, 6, 0, 0, 1, 2}
-	target := 0
+	nums := []int{1, 1, 1, 1, 1, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	target := 13
 	fmt.Println(search(nums, target))
 }
