@@ -8,37 +8,56 @@ func minWindow(s string, tt string) string {
 		return ""
 	}
 	h, t := 0, 0
-	minh, mint := 0, ls
-	flag := [222]int{}
-	for _, c := range tt {
-		flag[c]++
+	minh, mint := -1, ls
+	flag := make(map[byte]int)
+	for i, _ := range tt {
+		flag[tt[i]]++
 	}
-	has_nums := [222]int{}
-	for h < ls && t < ls {
-		for has_nums != flag {
+	has_nums := make(map[byte]int)
+	has_all := func() bool {
+		for i, _ := range flag {
+			if has_nums[i] < flag[i] {
+				return false
+			}
+		}
+		return true
+	}
+	for t < ls && h < ls {
+		for t < ls && !has_all() {
 			if flag[s[t]] != 0 {
 				has_nums[s[t]]++
-				if t+1-h < mint-minh {
-					minh, mint = h, t+1
-					break
-				}
 			}
 			t++
 		}
-		for h < ls && flag[s[h]] == 0 {
+		for h < ls && !has_all() {
+			if flag[s[h]] != 0 {
+				has_nums[s[h]]--
+			}
 			h++
 		}
-		if h < ls {
+		for has_all() {
+			if t-h < mint-minh {
+				minh, mint = h, t
+			}
+			if flag[s[h]] != 0 {
+				has_nums[s[h]]--
+			}
+			h++
+		}
+		if h == ls {
+			break
+		}
+		if flag[s[h]] != 0 {
 			has_nums[s[h]]--
 		}
 		h++
 	}
-	if mint != ls {
-		return s[minh : mint+1]
+	if minh == -1 {
+		return ""
 	}
-	return ""
+	return s[minh:mint]
 }
 
 func main() {
-	fmt.Println(minWindow("ABCCCCDFS", "AFS"))
+	fmt.Println(minWindow("ADOBECODEBANC", "ABC"))
 }
