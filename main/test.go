@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"math"
 )
 
 func binarySearch(c int) int {
@@ -13,6 +13,5 @@ func binarySearch(c int) int {
 	return a(3)
 }
 func main() {
-	a := "11111111112222222"
-	fmt.Println(strings.Replace(a, "1", "3", 4))
+	fmt.Println(math.Atan2(-0.01, -1) / math.Pi * 180)
 }
