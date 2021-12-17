@@ -7,6 +7,34 @@ type ListNode struct {
 	Next *ListNode
 }
 
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func createrTree(a []int) *TreeNode {
+	l := len(a)
+	if l == 0 {
+		return nil
+	}
+	var help func(a []int, index int) *TreeNode
+	help = func(a []int, index int) *TreeNode {
+		if a[index] == -1 {
+			return nil
+		}
+		t := &TreeNode{a[index], nil, nil}
+		if index*2+1 < len(a) {
+			t.Left = help(a, index*2+1)
+		}
+		if index*2+2 < len(a) {
+			t.Right = help(a, index*2+2)
+		}
+		return t
+	}
+	return help(a, 0)
+}
+
 func createrList(nums []int) *ListNode {
 	l := len(nums)
 	if l == 0 {
@@ -20,6 +48,7 @@ func createrList(nums []int) *ListNode {
 	}
 	return head
 }
+
 func printList(node *ListNode) {
 	start := node
 	for node != nil {
@@ -31,15 +60,30 @@ func printList(node *ListNode) {
 	}
 	fmt.Println()
 }
+
 func sortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	h := helpSort(head)
-	return h
+	s, q := head, head.Next
+	if q.Next != nil && q.Next.Next != nil {
+		q = q.Next.Next
+		s = s.Next
+	}
+	l2 := s.Next
+	s.Next = nil
+	h1 := sortList(head)
+	h2 := sortList(l2)
+	return merge(h1, h2)
 }
 func merge(l1, l2 *ListNode) *ListNode {
-	res := &ListNode{0, nil}
+	res := l1
+	if l1.Val > l2.Val {
+		res = l2
+		l2 = l2.Next
+	} else {
+		l1 = l1.Next
+	}
 	head := res
 	for l1 != nil && l2 != nil {
 		if l1.Val < l2.Val {
@@ -58,24 +102,8 @@ func merge(l1, l2 *ListNode) *ListNode {
 	if l2 != nil {
 		res.Next = l2
 	}
-	return head.Next
+	return head
 }
-func helpSort(head *ListNode) *ListNode {
-	s, q := head, head.Next
-	if q == nil {
-		return head
-	}
-	if q.Next != nil && q.Next.Next != nil {
-		q = q.Next.Next
-		s = s.Next
-	}
-	l2 := s.Next
-	s.Next = nil
-	h1 := helpSort(head)
-	h2 := helpSort(l2)
-	return merge(h1, h2)
-}
-
 func main() {
 	l := createrList([]int{5, 1, 2, 3, 4})
 	printList(sortList(l))
