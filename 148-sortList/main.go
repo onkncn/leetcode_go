@@ -66,7 +66,7 @@ func sortList(head *ListNode) *ListNode {
 		return head
 	}
 	s, q := head, head.Next
-	if q.Next != nil && q.Next.Next != nil {
+	for q.Next != nil && q.Next.Next != nil {
 		q = q.Next.Next
 		s = s.Next
 	}
