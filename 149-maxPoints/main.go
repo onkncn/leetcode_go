@@ -25,9 +25,6 @@ func maxPoints(points [][]int) int {
 				x = 1
 			} else {
 				t := gcd(x, y)
-				if i == 1 && j == 3 {
-					fmt.Println("test")
-				}
 				x, y = x/t, y/t
 			}
 			k[[2]int{x, y}]++
