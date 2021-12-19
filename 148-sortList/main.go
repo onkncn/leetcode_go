@@ -66,15 +66,13 @@ func sortList(head *ListNode) *ListNode {
 		return head
 	}
 	s, q := head, head.Next
-	if q.Next != nil && q.Next.Next != nil {
+	for q.Next != nil && q.Next.Next != nil {
 		q = q.Next.Next
 		s = s.Next
 	}
 	l2 := s.Next
 	s.Next = nil
-	h1 := sortList(head)
-	h2 := sortList(l2)
-	return merge(h1, h2)
+	return merge(sortList(head), sortList(l2))
 }
 func merge(l1, l2 *ListNode) *ListNode {
 	res := l1
