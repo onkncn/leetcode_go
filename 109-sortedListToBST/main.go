@@ -11,23 +11,29 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func sortedListToBST(head *ListNode) *TreeNode {
-	if head == nil {
-		return nil
+func mymax(a, b int) int {
+	if a > b {
+		return a
 	}
-	if head.Next == nil {
-		return &TreeNode{head.Val, nil, nil}
+	return b
+}
+func height(root *TreeNode) int {
+	if root == nil {
+		return 0
 	}
-	f, s := &ListNode{0, head}, head
-	for s != nil && s.Next != nil {
-		s = s.Next.Next
-		f = f.Next
+	hl := height(root.Left)
+	if hl == -1 {
+		return -1
 	}
-	head2 := f.Next.Next
-	t := f.Next.Val
-	f.Next = nil
-	return &TreeNode{t, sortedListToBST(head), sortedListToBST(head2)}
-} //1 2 3 4
+	hr := height(root.Right)
+	if hl-hr > 1 || hr-hl > 1 || hr == -1 {
+		return -1
+	}
+	return 1 + mymax(hl, hr)
+}
+func isBalanced(root *TreeNode) bool {
+	return height(root) != -1
+}
 
 func main() {
 
