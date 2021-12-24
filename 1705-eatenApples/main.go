@@ -1,9 +1,6 @@
 package main
 
-import (
-	"container/heap"
-	"fmt"
-)
+import "container/heap"
 
 type appleDay struct {
 	nums, day int
@@ -60,8 +57,4 @@ func eatenApples(apples []int, days []int) int {
 		heap.Pop(h)
 	}
 	return nums
-}
-func main() {
-	t := eatenApples([]int{2, 1, 10}, []int{2, 10, 1})
-	fmt.Println(t)
 }
