@@ -16,11 +16,11 @@ func isNStraightHand(hand []int, groupSize int) bool {
 		ks = append(ks, k)
 	}
 	sort.Ints(ks)
-	//fmt.Println(ks)
 	for _, i := range ks {
-		for mp[i] > 0 {
+		if mp[i] > 0 {
+			t := mp[i]
 			for j := i; j < i+groupSize; j++ {
-				mp[j]--
+				mp[j] -= t
 				if mp[j] < 0 {
 					return false
 				}
