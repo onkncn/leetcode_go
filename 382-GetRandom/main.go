@@ -2,14 +2,10 @@ package main
 
 import (
 	"fmt"
+	. "github.com/oOlivero/Leetcode/help"
 	"math/rand"
-	//"github.com/Leetcode/help"
 )
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
 type Solution struct {
 	head *ListNode
 }
