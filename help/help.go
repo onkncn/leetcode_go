@@ -13,7 +13,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func createrTree(a []int) *TreeNode {
+func CreaterTree(a []int) *TreeNode {
 	l := len(a)
 	if l == 0 {
 		return nil
@@ -35,7 +35,7 @@ func createrTree(a []int) *TreeNode {
 	return help(a, 0)
 }
 
-func createrList(nums []int) *ListNode {
+func CreaterList(nums []int) *ListNode {
 	l := len(nums)
 	if l == 0 {
 		return nil
@@ -49,7 +49,7 @@ func createrList(nums []int) *ListNode {
 	return head
 }
 
-func printList(node *ListNode) {
+func PrintList(node *ListNode) {
 	start := node
 	for node != nil {
 		fmt.Print(node.Val, " ")
