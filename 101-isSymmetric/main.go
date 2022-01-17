@@ -1,6 +1,6 @@
 package main
 
-import . "github.com/oOlivero/Leetcode/help"
+import . "github.com/oOlivero/lchelp"
 
 func isSymmetric(root *TreeNode) bool {
 	return check(root, root)
