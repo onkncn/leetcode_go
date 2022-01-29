@@ -1,10 +1,6 @@
 package main
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+import . "github.com/oOlivero/lchelp"
 
 func isSymmetric(root *TreeNode) bool {
 	return check(root, root)
